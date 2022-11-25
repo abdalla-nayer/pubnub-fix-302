@@ -33,9 +33,10 @@ export default (modules, { channel, id, name }) => {
 
   params.uuid = config.getUUID();
   params.pnsdk = generatePNSDK(config);
-
-  if (config.getAuthKey()) {
-    params.auth = config.getAuthKey();
+  
+  const tokenOrKey = tokenManager.getToken() || config.getAuthKey();
+  if (tokenOrKey) {
+      params.auth = tokenOrKey;
   }
 
   if (config.secretKey) {
